@@ -17,10 +17,10 @@ class ListProducts extends ListRecords
         ];
     }
 
-        protected function getHeaderWidgets(): array
-    {
-        return [
-            ProductResource\Widgets\StatsOverview::class,
-        ];
-    }
+    // protected function getHeaderWidgets(): array
+    // {
+    //     return [
+    //         ProductResource\Widgets\StatsOverview::class,
+    //     ];
+    // }
 }

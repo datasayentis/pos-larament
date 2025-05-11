@@ -17,10 +17,10 @@ class ListTransactions extends ListRecords
         ];
     }
 
-    protected function getHeaderWidgets(): array
-    {
-        return [
-            TransactionResource\Widgets\StatsOverview::class,
-        ];
-    }
+    // protected function getHeaderWidgets(): array
+    // {
+    //     return [
+    //         TransactionResource\Widgets\StatsOverview::class,
+    //     ];
+    // }
 }
