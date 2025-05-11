@@ -17,6 +17,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Resources\TransactionResource;
+use App\Models\Transaction;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -39,6 +41,8 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                Widgets\StatsOverviewWidget::class,
+
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -54,5 +58,12 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+    }
+    
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            TransactionResource\Widgets\StatsOverview::class,
+        ];
     }
 }

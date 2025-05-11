@@ -19,6 +19,12 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getWidgets(): array
+    {
+        return [
+            TransactionResource\Widgets\StatsOverview::class,
+        ];
+    }
     public static function form(Form $form): Form
     {
         return $form

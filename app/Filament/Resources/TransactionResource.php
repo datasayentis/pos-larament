@@ -31,6 +31,13 @@ class TransactionResource extends Resource
     //         ]);
     // }
 
+    public static function getWidgets(): array
+    {
+        return [
+            TransactionResource\Widgets\StatsOverview::class,
+        ];
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -256,36 +263,36 @@ class TransactionResource extends Resource
             ])
             ->filters([
                 Tables\Filters\Filter::make('transaction_date_range')
-                ->form([
-                    Forms\Components\DatePicker::make('from_date')
-                        ->label('From Date'),
-                    Forms\Components\DatePicker::make('to_date')
-                        ->label('To Date'),
-                ])
-                ->query(function (Builder $query, array $data): Builder {
-                    return $query
-                        ->when(
-                            $data['from_date'],
-                            fn(Builder $query, $date): Builder => $query->whereDate('transaction_date', '>=', $date)
-                        )
-                        ->when(
-                            $data['to_date'],
-                            fn(Builder $query, $date): Builder => $query->whereDate('transaction_date', '<=', $date)
-                        );
-                })
-                ->indicateUsing(function (array $data): array {
-                    $indicators = [];
-                    
-                    if ($data['from_date'] ?? null) {
-                        $indicators['from_date'] = 'From ' . Carbon::parse($data['from_date'])->toFormattedDateString();
-                    }
-                    
-                    if ($data['to_date'] ?? null) {
-                        $indicators['to_date'] = 'To ' . Carbon::parse($data['to_date'])->toFormattedDateString();
-                    }
-                    
-                    return $indicators;
-                }),
+                    ->form([
+                        Forms\Components\DatePicker::make('from_date')
+                            ->label('From Date'),
+                        Forms\Components\DatePicker::make('to_date')
+                            ->label('To Date'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['from_date'],
+                                fn(Builder $query, $date): Builder => $query->whereDate('transaction_date', '>=', $date)
+                            )
+                            ->when(
+                                $data['to_date'],
+                                fn(Builder $query, $date): Builder => $query->whereDate('transaction_date', '<=', $date)
+                            );
+                    })
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+
+                        if ($data['from_date'] ?? null) {
+                            $indicators['from_date'] = 'From ' . Carbon::parse($data['from_date'])->toFormattedDateString();
+                        }
+
+                        if ($data['to_date'] ?? null) {
+                            $indicators['to_date'] = 'To ' . Carbon::parse($data['to_date'])->toFormattedDateString();
+                        }
+
+                        return $indicators;
+                    }),
 
             ])
             ->actions([
